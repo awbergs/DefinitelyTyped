@@ -183,6 +183,11 @@ declare namespace angular {
         resumeBootstrap?(extraModules?: string[]): ng.auto.IInjectorService;
     }
 
+    type IServiceConstructor =
+        (new (...args: any[]) => any) |
+        // Instead of classes, plain functions are often used as service constructors, especially in examples.
+        ((...args: any[]) => (void | any));
+
     ///////////////////////////////////////////////////////////////////////////
     // Module
     // see http://docs.angularjs.org/api/angular.Module
@@ -259,8 +264,8 @@ declare namespace angular {
          * @param name The name of the instance.
          * @param serviceConstructor An injectable class (constructor function) that will be instantiated.
          */
-        service(name: string, serviceConstructor: Injectable<Function>): IModule;
-        service(object: {[name: string]: Injectable<Function>}): IModule;
+        service(name: string, serviceConstructor: Injectable<IServiceConstructor>): IModule;
+        service(object: {[name: string]: Injectable<IServiceConstructor>}): IModule;
         /**
          * Register a value service with the $injector, such as a string, a number, an array, an object or a function. This is short for registering a service where its provider's $get property is a factory function that takes no arguments and returns the value service.
 

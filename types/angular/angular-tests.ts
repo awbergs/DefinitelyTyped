@@ -226,12 +226,13 @@ mod.provider('name', ($scope: ng.IScope) => ({ $get: () => { } }));
 mod.provider('name', TestProvider);
 mod.provider('name', ['$scope', ($scope: ng.IScope) => {}]);
 mod.provider(My.Namespace);
-mod.service('name', ($scope: ng.IScope) => {});
-mod.service('name', ['$scope', ($scope: ng.IScope) => {}]);
+mod.service('name', class{});
+mod.service('name', function($scope: ng.IScope) {});
+mod.service('name', ['$scope', function($scope: ng.IScope){}]);
 mod.service({
     MyCtrl: class {},
-    MyCtrl2: () => {}, // tslint:disable-line:object-literal-shorthand
-    MyCtrl3: ['$fooService', ($fooService: any) => {}]
+    MyCtrl2: function(){}, // tslint:disable-line:object-literal-shorthand
+    MyCtrl3: ['$fooService', function($fooService: any){}]
 });
 mod.constant('name', 23);
 mod.constant('name', '23');
